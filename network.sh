@@ -309,16 +309,10 @@ cp -fpL /etc/group ${DESTDIR}/etc/
 cp -fpL /etc/gai.conf ${DESTDIR}/etc/
 cp -fpL /etc/ld.so.cache ${DESTDIR}/etc/
 
-if ( uname -m | grep -q "i[0-9]86" )
-then
-    cp -fprL /lib/libns* ${DESTDIR}/lib/ 
-    cp -fpL /lib/i386-linux-gnu/libns* ${DESTDIR}/lib/i386-linux-gnu/
-elif ( uname -m | grep -q "x86.*64" ) 
-then
-    cp -fpL /lib/x86_64-linux-gnu/libns* ${DESTDIR}/lib/x86_64-linux-gnu/ 
-else
-    error_exit "your architecture ($( uname -m )) seems not to be supported."
-fi
+for file in /lib/libns* /lib/*-linux-gnu/libns*
+do
+	[ -e "$file" ] && cp -fprL "$file" ${DESTDIR}$( dirname "$file" )
+done
 
 ######## }}} #######################
 
