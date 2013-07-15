@@ -8,7 +8,7 @@
 ##### Config {{{ ###################
 
 # useraccount that will be copied to initramfs, additional to the root account
-username=simon
+username=""
 
 # setup network (if dhcp=true you can ignore ip_adress, netmask and gateway.
 # nameserver and extended routing are optional anyways.)
@@ -103,10 +103,17 @@ do
 done
 
 echo -e "/bin/sh\n/bin/bash\n" > ${DESTDIR}/etc/shells
+
+if [ -z "$username" ]
+then
+	grep -e root /etc/shadow > ${DESTDIR}/etc/shadow
+	grep -e root /etc/passwd | sed -e 's@/bin/\(false\|bash\|sh\|zsh\|screen\)@/bin/sh@g' > ${DESTDIR}/etc/passwd
+else
 grep -e root -e $username /etc/shadow > ${DESTDIR}/etc/shadow
 grep -e root -e $username /etc/passwd | sed -e 's@/bin/\(false\|bash\|sh\|zsh\|screen\)@/bin/sh@g' -e "s|/home/.*:|/home/${username}:|g" > ${DESTDIR}/etc/passwd
 mkdir -p ${DESTDIR}/home/$username
 chown $username: ${DESTDIR}/home/$username -R
+fi
 
 ##### Generate Scripts {{{ #########
 

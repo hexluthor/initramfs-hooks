@@ -15,8 +15,8 @@ needed_directories="/usr/sbin/"
 depends="/usr/sbin/openvpn"
 optional_depends=""
 
-openvpn_config="/etc/openvpn/nerdmail/client.conf"
-openvpn_dir="/etc/openvpn/nerdmail/"
+openvpn_config="/etc/openvpn/client.conf"
+openvpn_dir="/etc/openvpn/"
 
 ######## }}} #######################
 
