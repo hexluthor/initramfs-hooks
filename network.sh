@@ -118,6 +118,7 @@ fi
 ##### Generate Scripts {{{ #########
 
 # startscript for dropbear ssh daemon 
+mkdir -p "$DESTDIR/scripts/local-top"
 cat >${DESTDIR}/scripts/local-top/sshd << 'EOF'
 #!/bin/sh
 
